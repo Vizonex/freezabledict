@@ -1,5 +1,5 @@
 [project]
-name = "frozendict"
+name = "freezabledict"
 version = "0.1.0"
 description = "freezable dictionary like object inspired by frozenlist."
 readme = "README.md"
@@ -16,11 +16,11 @@ requires = ["setuptools", "cython", "wheel"]
 [tool.setuptools]
 zip-safe = false
 # Important tip: use packages arguments they help with not needing a src directory...
-packages = ['frozendict']
+packages = ['freezabledict']
 
 ext-modules = [
-{name = "frozendict._frozendict", sources = ["frozendict/_frozendict.pyx"]}
+{name = "freezabledict._frozendict", sources = ["freezabledict/_frozendict.pyx"]}
 ]
 
-# [project.urls]
-#     repository = "https://github.com/Vizonex/frozendict.git"
+[project.urls]
+    repository = "https://github.com/Vizonex/freezabledict.git"

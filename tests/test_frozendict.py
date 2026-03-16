@@ -3,7 +3,7 @@
 from collections.abc import MutableMapping
 import pytest
 
-from frozendict import FrozenDict, PyFrozenDict
+from freezabledict import FrozenDict, PyFrozenDict
 
 
 # TODO: testing deepcopy
