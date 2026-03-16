@@ -1,17 +1,21 @@
 [project]
 name = "freezabledict"
-version = "0.1.0"
+dynamic = ["version"]
 description = "freezable dictionary like object inspired by frozenlist."
 readme = "README.md"
 authors = [
     { name = "Vizonex", email = "VizonexBusiness@gmail.com" }
 ]
 
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dependencies = []
 
 [build-system]
 requires = ["setuptools", "cython", "wheel"]
+
+[tool.setuptools.dynamic]
+version = {attr = "freezabledict.__version__"}
+
 
 [tool.setuptools]
 zip-safe = false
