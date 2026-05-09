@@ -85,6 +85,11 @@ class FrozenDict(MutableMapping):
             raise RuntimeError("Cannot modify frozen dict.")
         return self._items.update(*args, **kwargs)
 
+    def __copy__(self):
+        new_list = self.__class__(self._items)
+        if self._frozen:
+            new_list.freeze()
+        return new_list
 
 PyFrozenDict = FrozenDict
 

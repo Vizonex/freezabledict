@@ -32,7 +32,7 @@ cdef class FrozenDict:
     cdef inline object _fast_len(self):
         return len(self._items)
 
-    def freeze(self):
+    cpdef void freeze(self) noexcept:
         self._frozen.store(True)
 
     def __getitem__(self, key):
@@ -104,6 +104,13 @@ cdef class FrozenDict:
         return '<{}(frozen={}, {!r})'.format(
             self.__class__.__name__, self._frozen.load(), self._items
         )
+
+    def __copy__(self):
+        cdef FrozenDict new_dict
+        new_dict = self.__class__(self._items)
+        if self._frozen.load():
+            new_dict.freeze()
+        return new_dict
     
     def __deepcopy__(self, memo):
         cdef FrozenDict new_dict
