@@ -10,7 +10,7 @@ import types
 from collections.abc import MutableMapping
 from functools import total_ordering
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = ("FrozenDict", "PyFrozenDict")  # type: tuple[str, ...]
 
