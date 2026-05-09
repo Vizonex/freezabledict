@@ -5,6 +5,7 @@ import pytest
 
 from freezabledict import FrozenDict, PyFrozenDict
 
+from copy import copy
 
 # TODO: testing deepcopy
 
@@ -48,6 +49,39 @@ class FrozenDictMixin:
         with pytest.raises(RuntimeError):
             d['b'] = 2
 
+    def test_copy_unfrozen(self) -> None:
+        orig = self.FrozenDict({"1":1, "2":2, "3": 3})
+        copied = copy(orig)
+        assert copied == orig
+        assert copied is not orig
+        assert not copied.frozen
+        # Verify the copy has independent storage
+        orig["4"] = 4
+        assert len(orig) == 4
+        assert len(copied) == 3
+
+    def test_copy_frozen(self) -> None:
+        orig = self.FrozenDict({"1":1, "2":2, "3": 3})
+        orig.freeze()
+        copied = copy(orig)
+        assert copied == orig
+        assert copied is not orig
+        assert copied.frozen
+        # Verify the copy is also frozen
+        with pytest.raises(RuntimeError):
+            copied["4"] = 4
+
+    def test_copy_preserves_items(self) -> None:
+        inner = [1, 2]
+        orig = self.FrozenDict({"1":inner, "3":3})
+        copied = copy(orig)
+        # Shallow copy: inner objects are shared (same as list behavior)
+        assert copied["1"] is orig["1"]
+        # But the FrozenDict containers are independent
+        assert copied is not orig
+        orig["4"] = 4
+        assert len(orig) == 3
+        assert len(copied) == 2
 
 
 class TestFrozenDict(FrozenDictMixin):
