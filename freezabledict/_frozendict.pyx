@@ -129,6 +129,13 @@ cdef class FrozenDict:
         return '<{}(frozen={}, {!r})'.format(
             self.__class__.__name__, self._frozen.load(), self._items
         )
+
+    def __copy__(self):
+        cdef FrozenDict new_dict
+        new_dict = self.__class__(self._items)
+        if self._frozen.load():
+            new_dict.freeze()
+        return new_dict
     
     def clear(self):
         self._check_frozen()
